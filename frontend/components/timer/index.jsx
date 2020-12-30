@@ -25,7 +25,8 @@ const StyledProgress = styled.div`
 `;
 
 const Timer = (props, { time, onTimeIsUp }) => {
-  const [seconds, setSeconds] = useState(props.time);
+  const timeLimit = new Date(props.time).getSeconds();
+  const [seconds, setSeconds] = useState(timeLimit);
   // console.log(props.time)
   const [progress, setProgress] = useState(null);
   const userTime = createRef(null);
@@ -56,6 +57,8 @@ const Timer = (props, { time, onTimeIsUp }) => {
 
   useEffect(() => {
     let interval = setInterval(() => {
+      const presentTime = Date.now();
+      const diff = props.time - presentTime;
       if (seconds >= 1) {
         setSeconds((seconds) => seconds - 1);
       } else if (seconds === 0) {

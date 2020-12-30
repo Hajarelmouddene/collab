@@ -49,11 +49,16 @@ export default function CreateRoomForm() {
   };
   // this adds the array of options to the database
   const submitRoom = async () => {
+    const epoch = Date.now(); // number
+    const userTime = createTimeLimit.current.value * 1000;
+    console.log(userTime);
+    console.log(typeof userTime);
+    const timeLimit = epoch + userTime;
     const res = await addRoom({
       variables: {
         name: createRoomName.current.value, // to change
         id: placeholderRoomID, // being generated on the backend -> taking it out throws a zillion errors
-        timeLimit: createTimeLimit.current.value,
+        timeLimit: timeLimit.toString(),
         voteOptions: options,
       },
     });
